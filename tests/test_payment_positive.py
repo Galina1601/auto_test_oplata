@@ -1,5 +1,6 @@
 import time
 import psycopg2
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -26,12 +27,9 @@ def test_successful_payment_positive(driver):
 
     driver.find_element(By.CSS_SELECTOR, "button.button.button_view_extra").click()
 
-    # Ждём, пока на странице не появится слово "Успешно"
     WebDriverWait(driver, 20).until(
         lambda d: "Успешно" in d.page_source
     )
-
-    time.sleep(2)
 
     conn = psycopg2.connect(
         host="localhost",
@@ -47,5 +45,4 @@ def test_successful_payment_positive(driver):
     conn.close()
 
     assert row is not None, "В таблице payment_entity нет записей"
-    status = row[0]
-    assert status == "APPROVED"
+    assert row[0] == "APPROVED"
