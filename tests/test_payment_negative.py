@@ -1,8 +1,7 @@
-import allure
+import time
 from pages.main_page import MainPage
 from pages.payment_page import PaymentPage
 
-# Тест №1: Отклонённая карта 5555...
 def test_declined_card(driver):
     main_page = MainPage(driver)
     payment_page = PaymentPage(driver)
@@ -18,9 +17,9 @@ def test_declined_card(driver):
     payment_page.fill_cvc("123")
     payment_page.click_submit()
 
-    assert not payment_page.is_success_message_displayed(), "❌ Баг: отклонённая карта дала успех!"
+    time.sleep(3)
+    assert payment_page.is_error_message_displayed(), "❌ Отклонённая карта: нет ошибки"
 
-# Тест №2: Карта не из набора
 def test_card_not_in_set(driver):
     main_page = MainPage(driver)
     payment_page = PaymentPage(driver)
@@ -36,9 +35,9 @@ def test_card_not_in_set(driver):
     payment_page.fill_cvc("123")
     payment_page.click_submit()
 
-    assert not payment_page.is_success_message_displayed(), "❌ Баг: карта не из набора дала успех!"
+    time.sleep(3)
+    assert payment_page.is_error_message_displayed(), "❌ Карта не из набора: нет ошибки"
 
-# Тест №3: Невалидный CVC 023
 def test_invalid_cvc(driver):
     main_page = MainPage(driver)
     payment_page = PaymentPage(driver)
@@ -54,4 +53,6 @@ def test_invalid_cvc(driver):
     payment_page.fill_cvc("023")
     payment_page.click_submit()
 
-    assert not payment_page.is_success_message_displayed(), "❌ Баг: CVC 023 дал успех!"
+    time.sleep(3)
+    assert payment_page.is_error_message_displayed(), "❌ CVC 023: нет ошибки"
+
