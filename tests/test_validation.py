@@ -2,7 +2,7 @@ import time
 from pages.main_page import MainPage
 from pages.payment_page import PaymentPage
 
-# ----- Пустые поля (5 тестов) -----
+#  Пустые поля (5 тестов)
 def test_empty_card_number(driver):
     main_page = MainPage(driver)
     payment_page = PaymentPage(driver)
